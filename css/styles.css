@@ -1,0 +1,156 @@
+button {
+  min-width: 100px;
+  height: 50px;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.centrarColumna, body main, body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ocultar {
+  display: none;
+}
+
+body {
+  margin: 1rem;
+  padding: 1rem;
+  font-size: calc(0.5rem + 1vw);
+}
+body header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  color: #ccc;
+}
+body header #alternarTemaOscuro {
+  background: inherit;
+  color: inherit;
+}
+body header #deshacer {
+  background: inherit;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+body header #deshacer svg {
+  fill: green;
+  width: 100%;
+  height: 100%;
+}
+body main {
+  width: 80%;
+}
+body main .creadorContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 1rem;
+  border: 2px solid green;
+  width: 100%;
+  height: 20px;
+  background-color: green;
+  outline: none;
+  padding: 0.5rem;
+}
+body main .creadorContainer input {
+  width: auto;
+  padding: 0.5rem;
+  background: inherit;
+  color: inherit;
+  margin-right: 1rem;
+}
+body main .creadorContainer button {
+  background: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  margin-left: 1rem;
+}
+body main .notasContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+body main .notasContainer .nota {
+  width: 250px;
+  border: 3px solid red;
+  border-radius: 10px;
+  margin: 1rem;
+  padding: 0.2rem;
+}
+body main .notasContainer .nota .controlesSuperiores {
+  display: flex;
+  justify-content: space-between;
+}
+body main .notasContainer .nota .controlesSuperiores div {
+  display: block;
+}
+body main .notasContainer .nota .controlesSuperiores .delete {
+  cursor: pointer;
+}
+body main .notasContainer .nota .controlesSuperiores .delete svg {
+  cursor: pointer;
+  width: 1.5rem;
+}
+body main .notasContainer .nota .controlesSuperioresDos {
+  display: flex;
+  justify-content: space-between;
+}
+body main .notasContainer .nota .controlesSuperioresDos input {
+  background-color: inherit;
+  color: inherit;
+}
+body main .notasContainer .nota .controlesSuperioresDos select {
+  background-color: inherit;
+  color: inherit;
+}
+body main .notasContainer .nota .principal {
+  margin: 0.2rem;
+  margin-top: 1rem;
+}
+body main .notasContainer .nota .principal::first-letter {
+  font-size: 3rem;
+  color: green;
+}
+body main .notasContainer .nota-C {
+  background-color: #00ffff;
+  border-color: #00b0f6;
+}
+body main .notasContainer .nota-M {
+  background-color: #ff00ff;
+  border-color: #96305a;
+}
+body main .notasContainer .nota-Y {
+  background-color: #ffcc0f;
+  border-color: #beb72d;
+}
+body main .notasContainer .nota-K {
+  background-color: #000;
+  border-color: #000;
+  color: white;
+}
+body main .notasContainer .nota-W {
+  background-color: #fff;
+  border-color: #000;
+}
+.temaOscuro {
+  background-color: #2b2b2b;
+  transition: all 1s;
+}
+
+.temaClaro {
+  background-color: #efefef;
+  color: black;
+  transition: all 1s;
+}/*# sourceMappingURL=styles.css.map */

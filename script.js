@@ -11,16 +11,6 @@ class Notas {
 }
 let notasArray = [];
 
-let indiceLocalStorage = "asfasdfaaaa";
-
-function guardarEnLocal() {
-    let enJson = JSON.stringify(notasArray);
-    localStorage.setItem(indiceLocalStorage,enJson);
-    console.log("guardado:");
-    console.log(enJson);
-    console.log("fin");
-}
-
 let hora = new Date().getHours();
 let body = document.getElementById("body");
 
@@ -33,17 +23,19 @@ function cambiarTemaOscuro() {
         body.classList.remove("temaOscuro");
         body.classList.add("temaClaro");
         botonAlternarTemaOscuro.classList.remove("temaOscuro");
+        botonAlternarTemaOscuro.classList.add("temaClaro");
         botonAlternarTemaOscuro.innerText = "Cambiar a tema Oscuro";
 
         //let botones = document.querySelectorAll("button");
         //botones.forEach((el)=>{el.classList.remove("botonTemaOscuro")});
-    }//
+    }
 
     else {
         console.log("pasar a oscuro");
         body.classList.remove("temaClaro");
         body.classList.add("temaOscuro");
         botonAlternarTemaOscuro.classList.add("temaOscuro");
+        botonAlternarTemaOscuro.classList.remove("temaClaro");
         botonAlternarTemaOscuro.innerText = "Cambiar a modo Claro";
         //let botones = document.querySelectorAll("button");
         //console.log(botones);
@@ -54,11 +46,12 @@ function cambiarTemaOscuro() {
 if(hora>=20 || hora <=7) {
     body.classList.remove("temaClaro");
     body.classList.add("temaOscuro");
-    botonAlternarTemaOscuro.classList.add("oscuro");
+    botonAlternarTemaOscuro.classList.add("temaOscuro");
+    botonAlternarTemaOscuro.classList.remove("temaClaro");
     botonAlternarTemaOscuro.innerText = "Cambiar a modo Claro";
 }
 
-
+/************************************************************** */
 
 
 
@@ -71,15 +64,7 @@ function obtenerFechaFormateada(fecha) {
 }
 
 
-// const fechaFormateada(fecha => {fecha.month()})
-
 console.log("hola");
-
-
-
-//let coloresCMYK = ["C","M","Y","K"];
-
-
 
 
 function selectorColor(indice) {
@@ -97,8 +82,6 @@ function selectorPrioridad(indice) {
 }
 
 
-
-
 function borrarNota(indice) {
     //alert("no me borres "+indice);
     botonPapelera.classList.remove("ocultar")
@@ -114,11 +97,10 @@ let botonGuardarNota = document.getElementById("guardarNota");
 let textoUsuario = document.getElementById("textoEntrada");
 
 botonGuardarNota.addEventListener("click",agregarNota);
-textoUsuario.addEventListener("change", agregarNota); //To-Do: chequear que se presione el enter
-
+//textoUsuario.addEventListener("change", agregarNota); //To-Do: chequear que se presione el enter
 
 function agregarNota() {
-    let crearNota = new Notas(textoUsuario.value,new Date(),10,"Y");
+    let crearNota = new Notas(textoUsuario.value,new Date(),notasArray.length,"Y");
     notasArray.push(crearNota);
     mostrarNotas();
 }
@@ -135,7 +117,13 @@ function recuperarNota() {
     mostrarNotas();
 }
 
-
+function guardarEnLocal() {
+    let enJson = JSON.stringify(notasArray);
+    localStorage.setItem("usuario",enJson);
+    // console.log("guardado:");
+    // console.log(enJson);
+    // console.log("fin");
+}
 
 
 let notasContainer = document.getElementById("notasContainer");
@@ -149,17 +137,20 @@ function mostrarNotas() {
     for(let notas of notasArray) {
         //console.log(notas.texto);
         let notaNueva =     `<div class="nota nota-${notas.color}" id="nota${indice}">
-                                <div class="controlesSuperiores"><div>${obtenerFechaFormateada(notas.fecha)}</div><div class="delete" onClick="borrarNota(${indice});">${closeSVG}</div></div>
-                                <div class="controlesSuperioresDos">
-                                    <input type="number" id="inputPrioridad${indice}" value=${notas.prioridad} onchange="selectorPrioridad(${indice});" min="0" max="10">
-                                    <select id="select${indice}" onChange="selectorColor(${indice})">
-                                        <option value="C" ${notas.color=="C"?"selected":""}>C</option>
-                                        <option value="M" ${notas.color=="M"?"selected":""}>M</option>
-                                        <option value="Y" ${notas.color=="Y"?"selected":""}>Y</option>
-                                        <option value="K" ${notas.color=="K"?"selected":""}>K</option>
-                                        <option value="W" ${notas.color=="W"?"selected":""}>W</option>
-                                    </select>
+                                <div class="controlesSuperiores">
+                                    <div class="nota_fecha">${obtenerFechaFormateada(notas.fecha)}</div>
+                                    <div class="nota_controles">
+                                        <input type="number" id="inputPrioridad${indice}" value=${notas.prioridad} onchange="selectorPrioridad(${indice});" min="0" max="10">
+                                        <select id="select${indice}" onChange="selectorColor(${indice})">
+                                            <option value="C" ${notas.color=="C"?"selected":""}>C</option>
+                                            <option value="M" ${notas.color=="M"?"selected":""}>M</option>
+                                            <option value="Y" ${notas.color=="Y"?"selected":""}>Y</option>
+                                            <option value="K" ${notas.color=="K"?"selected":""}>K</option>
+                                            <option value="W" ${notas.color=="W"?"selected":""}>W</option>
+                                        </select>
+                                        <div class="delete" onClick="borrarNota(${indice});">${closeSVG}</div>
                                     </div>
+                                </div>
                                 <div class="principal">${notas.texto}</div>
                             </div>`;
         notasContainer.innerHTML += notaNueva;
@@ -171,50 +162,27 @@ function mostrarNotas() {
 
 
 
-let local = localStorage.getItem(indiceLocalStorage);
+let localData = localStorage.getItem("usuario");
 
-
-if(local != null) {
+if(localData != null) {
 //if(local == null || notasArray.length == 0) {
 
-    let parsedData = JSON.parse(local);
-    //notasArray = local;
-    
-    console.log(parsedData);
+    let parsedData = JSON.parse(localData);
+    //console.log(parsedData);
      for(let i=0;i<parsedData.length;i++) {
          console.log("item "+i+" - "+parsedData[i].texto);
          notasArray.push(new Notas(parsedData[i].texto,new Date(parsedData[i].fecha),parsedData[i].prioridad,parsedData[i].color));
-    
-         //notasArray.push(new parseData[i]);
      }
      console.log(notasArray);
      mostrarNotas();
 }
 
 else {
-    //localStorage.clear();
-    //notasArray = [];
-    console.log("no había nada!");
-    //crear arreglo de notas aleatorio
-   // notasArray.push(new Notas("<strong>INSTRUCCIONES</strong><br><ul><li>Escriba el texto de una nota y presiones guardar, aparecerá su nuevo post-it.</li><li>Cambie el color con el selector CMYKW</li><li>Puede indicar \"prioridad\" del 1 al 10 para que aparezca primero.</li><li>Al eliminar una nota aparecerá el botón papelera para restaurarla.</li></ul>",new Date(),0,"Y"));
-    notasArray.push(new Notas("Hola primer nota",new Date(),0,"Y"));
-    notasArray.push(new Notas("Hola segunda nota",new Date(),1,"M"));
-    notasArray.push(new Notas("Hola tercera nota",new Date(),1,"K"));
-    
-    guardarEnLocal();
+    //console.log("no había nada!");
+    localStorage.clear();
+    notasArray.push(new Notas("<strong>INSTRUCCIONES</strong><br><ul><li>Escriba el texto de una nota y presiones guardar, aparecerá su nuevo post-it.</li><li>Cambie el color con el selector CMYKW</li><li>Puede indicar \"prioridad\" del 1 al 10 para que aparezca primero.</li><li>Al eliminar una nota aparecerá el botón papelera para restaurarla.</li></ul>",new Date(),0,"M"));
     mostrarNotas();
 }
 
 
-
-// class Notas {
-//     constructor(texto,fecha,prioridad,color) {
-//         this.texto = texto;
-//         this.fecha = fecha;
-//         this.prioridad = parseInt(prioridad);
-//         this.color = color.toUpperCase();
-//     }
-// }
-//mostrarNotas();
 console.log("adios");
-//localStorage.clear();

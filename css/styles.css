@@ -1,11 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 button {
   min-width: 100px;
   height: 50px;
-  margin: 1rem;
-  padding: 1rem;
 }
 
-.centrarColumna, body main, body {
+.centrarColumna, body main .notasContainer .nota .principal, body main .notasContainer .nota .controlesSuperiores .nota_fecha, body main, body {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,105 +21,126 @@ button {
 }
 
 body {
-  margin: 1rem;
-  padding: 1rem;
-  font-size: calc(0.5rem + 1vw);
+  font-size: calc(1 * (1rem + 1vw));
 }
 body header {
-  width: 100%;
+  width: 80%;
   display: flex;
   flex-direction: row;
   justify-content: right;
   color: #ccc;
+  font-size: inherit;
 }
 body header #alternarTemaOscuro {
   background: inherit;
-  color: green;
+  margin: 1rem;
+  padding: 1rem;
   width: 100px;
   height: 100px;
 }
 body header #deshacer {
   background: inherit;
+  margin: 1rem;
+  padding: 1rem;
   width: 100px;
   height: 100px;
   cursor: pointer;
+  border: 3px solid #ccc;
 }
 body header #deshacer svg {
   fill: green;
   width: 100%;
   height: 100%;
 }
+body header button {
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+body header .temaOscuro {
+  border: 3px solid #ccc;
+  color: violet;
+}
+body header .temaClaro {
+  border: 3px solid violet;
+  color: black;
+}
 body main {
-  width: 80%;
+  width: 100%;
 }
 body main .creadorContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  margin-top: 1rem;
+  width: 80%;
   border: 2px solid green;
-  width: 100%;
-  height: 20px;
   background-color: green;
   outline: none;
-  padding: 0.5rem;
+  color: white;
+  margin-bottom: 3rem;
 }
 body main .creadorContainer input {
   width: auto;
   padding: 0.5rem;
+  text-align: center;
   background: inherit;
   color: inherit;
-  margin-right: 1rem;
+  font-size: inherit;
+  min-height: 50px;
 }
 body main .creadorContainer button {
   background: inherit;
   color: inherit;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  margin-left: 1rem;
+  font-size: inherit;
+  cursor: pointer;
 }
 body main .notasContainer {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  width: 80%;
 }
 body main .notasContainer .nota {
-  width: 250px;
-  border: 3px solid red;
+  width: 100%;
+  border: 3px solid pink;
   border-radius: 10px;
   margin: 1rem;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 body main .notasContainer .nota .controlesSuperiores {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  min-height: 2.5rempx;
 }
-body main .notasContainer .nota .controlesSuperiores div {
-  display: block;
+body main .notasContainer .nota .controlesSuperiores .nota_fecha {
+  width: 100%;
 }
-body main .notasContainer .nota .controlesSuperiores .delete {
+body main .notasContainer .nota .controlesSuperiores .nota_controles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+body main .notasContainer .nota .controlesSuperiores .nota_controles input {
+  width: auto;
+  background-color: inherit;
+  color: inherit;
+}
+body main .notasContainer .nota .controlesSuperiores .nota_controles select {
+  background-color: inherit;
+  color: inherit;
+}
+body main .notasContainer .nota .controlesSuperiores .nota_controles .delete {
   cursor: pointer;
+  align-self: center;
 }
-body main .notasContainer .nota .controlesSuperiores .delete svg {
+body main .notasContainer .nota .controlesSuperiores .nota_controles .delete svg {
+  display: block;
   cursor: pointer;
   width: 1.5rem;
 }
-body main .notasContainer .nota .controlesSuperioresDos {
-  display: flex;
-  justify-content: space-between;
-}
-body main .notasContainer .nota .controlesSuperioresDos input {
-  background-color: inherit;
-  color: inherit;
-}
-body main .notasContainer .nota .controlesSuperioresDos select {
-  background-color: inherit;
-  color: inherit;
-}
 body main .notasContainer .nota .principal {
-  margin: 0.2rem;
-  margin-top: 1rem;
+  margin: 1.5rem;
 }
 body main .notasContainer .nota .principal::first-letter {
   font-size: 3rem;
@@ -129,11 +154,11 @@ body main .notasContainer .nota-C .controlesSuperiores {
   background-color: #00b0f6;
 }
 body main .notasContainer .nota-M {
-  background-color: #ff00ff;
-  border-color: #96305a;
+  background-color: violet;
+  border-color: #ff00ff;
 }
 body main .notasContainer .nota-M .controlesSuperiores {
-  background-color: #96305a;
+  background-color: #ff00ff;
 }
 body main .notasContainer .nota-Y {
   background-color: #fff159;
@@ -150,9 +175,6 @@ body main .notasContainer .nota-K {
 body main .notasContainer .nota-K .controlesSuperiores {
   background-color: #eee;
   color: black;
-}
-body main .notasContainer .nota-K .controlesSuperiores svg {
-  fill: #aaa;
 }
 body main .notasContainer .nota-W {
   background-color: #fff;
@@ -174,4 +196,29 @@ body main .notasContainer .nota-W .controlesSuperiores svg {
   background-color: #efefef;
   color: black;
   transition: all 1s;
+}
+
+@media only screen and (min-width: 370px) {
+  body {
+    font-size: calc((1rem + 1vw) * 0.8);
+  }
+  body main .notasContainer .nota {
+    width: 320px;
+  }
+  body main .notasContainer .nota .controlesSuperiores {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  body main .notasContainer .nota .controlesSuperiores .nota_fecha {
+    width: 50%;
+    font-size: calc((1rem + 1vw) * 0.6);
+  }
+  body main .notasContainer .nota .controlesSuperiores .nota_controles {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+  }
+  body main .notasContainer .nota .controlesSuperiores .nota_controles .delete {
+    margin-right: 0.25rem;
+  }
 }/*# sourceMappingURL=styles.css.map */

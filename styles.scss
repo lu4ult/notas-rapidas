@@ -8,8 +8,8 @@ $cyan: #00ffff;
 $cyan-oscuro: #00b0f6;
 $magenta: #ff00ff;
 $magenta-oscuro: #96305a;
-$amarillo: #beb72d;
-$amarillo-oscuro: #ffcc0f;
+$amarillo-oscuro: #ffcf17;
+$amarillo: #fff159;
 
 button {
     min-width: 100px;
@@ -42,19 +42,21 @@ body {
         width: 100%;
         display: flex;
         flex-direction: row;
-        justify-content: left;
+        justify-content: right;
         color: #ccc;
 
         #alternarTemaOscuro {
             background: inherit;
-            color: inherit;
+            color: green;
+            width: 100px;
+            height: 100px;
         }
 
         #deshacer {
             background: inherit;
-            position: absolute;
-            right: 10px;
-            top: 10px;
+            // position: absolute;
+            // right: 10px;
+            // top: 10px;
             width: 100px;
             height: 100px;
             cursor: pointer;
@@ -113,7 +115,7 @@ body {
                 border: 3px solid red;
                 border-radius: 10px;
                 margin: 1rem;
-                padding: 0.2rem;
+                //padding: 0.2rem;
                 .controlesSuperiores {
                     display: flex;
                     justify-content: space-between;
@@ -163,27 +165,51 @@ body {
             .nota-C {
                 background-color: $cyan;
                 border-color: $cyan-oscuro;
+                .controlesSuperiores {
+                    background-color: $cyan-oscuro;
+                }
             }
 
             .nota-M {
                 background-color: $magenta;
                 border-color: $magenta-oscuro;
+                .controlesSuperiores {
+                    background-color: $magenta-oscuro;
+                }
             }
 
             .nota-Y {
-                background-color: $amarillo-oscuro;
-                border-color: $amarillo;
+                background-color: $amarillo;
+                border-color: $amarillo-oscuro;
+                .controlesSuperiores{
+                    background-color: $amarillo-oscuro;
+                }
             }
 
             .nota-K {
                 background-color: #000;
-                border-color: #000;
+                border-color: #aaa;
                 color: white;
+                .controlesSuperiores{
+                    background-color: #eee;
+                    color:black;
+                    svg {
+                        fill: #aaa;
+                    }
+
+                }
             }
 
             .nota-W {
                 background-color: #fff;
                 border-color: #000;
+                .controlesSuperiores {
+                    background-color: #000;
+                    color: white;
+                    svg {
+                        fill: white;
+                    }
+                }
             }
         }
 

@@ -1,6 +1,26 @@
 // localStorage.setItem('nota1', 'Juan');
 // localStorage.setItem('nota2', 'Pepe');
 
+class Notas {
+    constructor(texto,fecha,prioridad,color) {
+        this.texto = texto;
+        this.fecha = fecha;
+        this.prioridad = parseInt(prioridad);
+        this.color = color.toUpperCase();
+    }
+}
+let notasArray = [];
+
+let indiceLocalStorage = "asfasdfaaaa";
+
+function guardarEnLocal() {
+    let enJson = JSON.stringify(notasArray);
+    localStorage.setItem(indiceLocalStorage,enJson);
+    console.log("guardado:");
+    console.log(enJson);
+    console.log("fin");
+}
+
 let hora = new Date().getHours();
 let body = document.getElementById("body");
 
@@ -38,21 +58,9 @@ if(hora>=20 || hora <=7) {
     botonAlternarTemaOscuro.innerText = "Cambiar a modo Claro";
 }
 
-class Notas {
-    constructor(texto,fecha,prioridad,color) {
-        this.texto = texto;
-        this.fecha = fecha;
-        this.prioridad = parseInt(prioridad);
-        this.color = color.toUpperCase();
-    }
-}
 
-let notasArray = [
-    new Notas("hola soy una nota",new Date(),Math.random()*10,"C"),
-    new Notas("hola soy otra nota distinta",new Date(),Math.random()*10,"m"),
-    new Notas("recordar que la sandia no es de raza",new Date(),Math.random()*10,"y"),
-    new Notas("comprarle comida a pantalones que le quedan sólo 3 kilos",new Date(),"10","m")
-];
+
+
 
 let notasArrayPapelera = [];
 
@@ -71,46 +79,14 @@ console.log("hola");
 
 //let coloresCMYK = ["C","M","Y","K"];
 
-let notasContainer = document.getElementById("notasContainer");
-let closeSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M175 175C184.4 165.7 199.6 165.7 208.1 175L255.1 222.1L303 175C312.4 165.7 327.6 165.7 336.1 175C346.3 184.4 346.3 199.6 336.1 208.1L289.9 255.1L336.1 303C346.3 312.4 346.3 327.6 336.1 336.1C327.6 346.3 312.4 346.3 303 336.1L255.1 289.9L208.1 336.1C199.6 346.3 184.4 346.3 175 336.1C165.7 327.6 165.7 312.4 175 303L222.1 255.1L175 208.1C165.7 199.6 165.7 184.4 175 175V175zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"/></svg>';
 
-// let selector =`<select name="Color">
-//                 <option value="value1">C</option>
-//                 <option value="value2" selected>M</option>
-//                 <option value="value3">Y</option>
-//                 </select>`;
-function mostrarNotas() {
-    notasContainer.innerHTML = "";
-    notasArray.sort((a,b) => a.prioridad - b.prioridad);
-    notasArray.reverse();
-    let indice = 0;
-    for(let notas of notasArray) {
-        //console.log(notas.texto);
-        let notaNueva =     `<div class="nota nota-${notas.color}" id="nota${indice}">
-                                <div class="controlesSuperiores"><div>${obtenerFechaFormateada(notas.fecha)}</div><div class="delete" onClick="borrarNota(${indice});">${closeSVG}</div></div>
-                                <div class="controlesSuperioresDos">
-                                    <input type="number" id="inputPrioridad${indice}" value=${notas.prioridad} onchange="selectorPrioridad(${indice});" min="0" max="10">
-                                    <select id="select${indice}" onChange="selectorColor(${indice})">
-                                        <option value="C" ${notas.color=="C"?"selected":""}>C</option>
-                                        <option value="M" ${notas.color=="M"?"selected":""}>M</option>
-                                        <option value="Y" ${notas.color=="Y"?"selected":""}>Y</option>
-                                        <option value="K" ${notas.color=="K"?"selected":""}>K</option>
-                                        <option value="W" ${notas.color=="W"?"selected":""}>W</option>
-                                    </select>
-                                    </div>
-                                <div class="principal">${notas.texto}</div>
-                            </div>`;
-        notasContainer.innerHTML += notaNueva;
-        //console.log(notaNueva);
-        indice++;
-    }
-}
 
 
 function selectorColor(indice) {
     let letraSeleccionada = document.getElementById("select"+indice);   //Obtenemos el valor que seleccionó el usuario
     notasArray[indice].color = letraSeleccionada.value;
     mostrarNotas();
+    guardarEnLocal();
 }
 
 function selectorPrioridad(indice) {
@@ -138,11 +114,11 @@ let botonGuardarNota = document.getElementById("guardarNota");
 let textoUsuario = document.getElementById("textoEntrada");
 
 botonGuardarNota.addEventListener("click",agregarNota);
-textoUsuario.addEventListener("change", agregarNota);
+textoUsuario.addEventListener("change", agregarNota); //To-Do: chequear que se presione el enter
 
 
 function agregarNota() {
-    let crearNota = new Notas(textoUsuario.value,new Date(),10,"W");
+    let crearNota = new Notas(textoUsuario.value,new Date(),10,"Y");
     notasArray.push(crearNota);
     mostrarNotas();
 }
@@ -161,60 +137,84 @@ function recuperarNota() {
 
 
 
-mostrarNotas();
 
-// function leerNotasDelAlmacenamiento() {
-//     for(let i = 0;i<=localStorage.length;i++) {
-//         notas[i] = localStorage.getItem('nota'+i);
+let notasContainer = document.getElementById("notasContainer");
+let closeSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M175 175C184.4 165.7 199.6 165.7 208.1 175L255.1 222.1L303 175C312.4 165.7 327.6 165.7 336.1 175C346.3 184.4 346.3 199.6 336.1 208.1L289.9 255.1L336.1 303C346.3 312.4 346.3 327.6 336.1 336.1C327.6 346.3 312.4 346.3 303 336.1L255.1 289.9L208.1 336.1C199.6 346.3 184.4 346.3 175 336.1C165.7 327.6 165.7 312.4 175 303L222.1 255.1L175 208.1C165.7 199.6 165.7 184.4 175 175V175zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"/></svg>';
+
+function mostrarNotas() {
+    notasContainer.innerHTML = "";
+    notasArray.sort((a,b) => a.prioridad - b.prioridad);
+    notasArray.reverse();
+    let indice = 0;
+    for(let notas of notasArray) {
+        //console.log(notas.texto);
+        let notaNueva =     `<div class="nota nota-${notas.color}" id="nota${indice}">
+                                <div class="controlesSuperiores"><div>${obtenerFechaFormateada(notas.fecha)}</div><div class="delete" onClick="borrarNota(${indice});">${closeSVG}</div></div>
+                                <div class="controlesSuperioresDos">
+                                    <input type="number" id="inputPrioridad${indice}" value=${notas.prioridad} onchange="selectorPrioridad(${indice});" min="0" max="10">
+                                    <select id="select${indice}" onChange="selectorColor(${indice})">
+                                        <option value="C" ${notas.color=="C"?"selected":""}>C</option>
+                                        <option value="M" ${notas.color=="M"?"selected":""}>M</option>
+                                        <option value="Y" ${notas.color=="Y"?"selected":""}>Y</option>
+                                        <option value="K" ${notas.color=="K"?"selected":""}>K</option>
+                                        <option value="W" ${notas.color=="W"?"selected":""}>W</option>
+                                    </select>
+                                    </div>
+                                <div class="principal">${notas.texto}</div>
+                            </div>`;
+        notasContainer.innerHTML += notaNueva;
+        //console.log(notaNueva);
+        indice++;
+    }
+    guardarEnLocal();
+}
+
+
+
+let local = localStorage.getItem(indiceLocalStorage);
+
+
+if(local != null) {
+//if(local == null || notasArray.length == 0) {
+
+    let parsedData = JSON.parse(local);
+    //notasArray = local;
+    
+    console.log(parsedData);
+     for(let i=0;i<parsedData.length;i++) {
+         console.log("item "+i+" - "+parsedData[i].texto);
+         notasArray.push(new Notas(parsedData[i].texto,new Date(parsedData[i].fecha),parsedData[i].prioridad,parsedData[i].color));
+    
+         //notasArray.push(new parseData[i]);
+     }
+     console.log(notasArray);
+     mostrarNotas();
+}
+
+else {
+    //localStorage.clear();
+    //notasArray = [];
+    console.log("no había nada!");
+    //crear arreglo de notas aleatorio
+   // notasArray.push(new Notas("<strong>INSTRUCCIONES</strong><br><ul><li>Escriba el texto de una nota y presiones guardar, aparecerá su nuevo post-it.</li><li>Cambie el color con el selector CMYKW</li><li>Puede indicar \"prioridad\" del 1 al 10 para que aparezca primero.</li><li>Al eliminar una nota aparecerá el botón papelera para restaurarla.</li></ul>",new Date(),0,"Y"));
+    notasArray.push(new Notas("Hola primer nota",new Date(),0,"Y"));
+    notasArray.push(new Notas("Hola segunda nota",new Date(),1,"M"));
+    notasArray.push(new Notas("Hola tercera nota",new Date(),1,"K"));
+    
+    guardarEnLocal();
+    mostrarNotas();
+}
+
+
+
+// class Notas {
+//     constructor(texto,fecha,prioridad,color) {
+//         this.texto = texto;
+//         this.fecha = fecha;
+//         this.prioridad = parseInt(prioridad);
+//         this.color = color.toUpperCase();
 //     }
-//     console.log(notas);
 // }
-
-
-// let botonAgregarNota = document.getElementById("boton-agregar-nota");
-// botonAgregarNota.addEventListener("click", function(e) {
-//     let textoActual = document.getElementById("text");          //Obtenemos el elemento HTML
-//     textoActual = textoActual.value;                            //Reemplazamo directamente por el valor del elemento
-
-//     if(textoActual === "borrar") {
-//         console.log("borrando");
-//         localStorage.clear();
-//         notas = [];
-//     }
-//     else {
-//         if(textoActual.length >= 1) {
-//             localStorage.setItem("nota" + notas.length, textoActual);
-//             notas.push(textoActual);                                    //Además de guardarlo en el localstorage hay que agregarlo al array para poder usarlo en esta sesión
-//             console.log("Nueva nota: "+textoActual);
-//         }
-//     }
-
-//     cargarNotasAlDOM();                                   //Lo llamamos acá para actualizar el contenido al momento de agregar la nota nueva.
-// });
-
-
-// function cargarNotasAlDOM () {
-//     let divNotas = document.getElementById("notasContainer");
-//     divNotas.innerHTML = "";
-
-
-//     for(let i=0;i<=notas.length;i++) {
-//         // let idActual = "nota" + i;
-//         // if(notas[i] != null && notas[i] != undefined)
-//         //     divNotas.innerHTML += "<div id=\""+idActual+"\"class=\"notas\">"+notas[i]+"</div>"
-//         let templateString = `  <div id=\"nota${i}\" class=\"notas\">
-//                                 <h3> Nota : ${i+1}</h3>
-//                                 <span>${notas[i]}</span>
-//                                 </div>`;
-//         if(notas[i] != null && notas[i] != undefined) {
-//             //document.body.main.appendChild(templateString);
-//             divNotas.innerHTML += templateString;
-//         }
-//     }
-// }
-
-
-// leerNotasDelAlmacenamiento();
-// cargarNotasAlDOM();
-
+//mostrarNotas();
 console.log("adios");
+//localStorage.clear();

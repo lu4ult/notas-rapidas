@@ -25,18 +25,17 @@ body header {
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: right;
   color: #ccc;
 }
 body header #alternarTemaOscuro {
   background: inherit;
-  color: inherit;
+  color: green;
+  width: 100px;
+  height: 100px;
 }
 body header #deshacer {
   background: inherit;
-  position: absolute;
-  right: 10px;
-  top: 10px;
   width: 100px;
   height: 100px;
   cursor: pointer;
@@ -87,7 +86,6 @@ body main .notasContainer .nota {
   border: 3px solid red;
   border-radius: 10px;
   margin: 1rem;
-  padding: 0.2rem;
 }
 body main .notasContainer .nota .controlesSuperiores {
   display: flex;
@@ -127,22 +125,45 @@ body main .notasContainer .nota-C {
   background-color: #00ffff;
   border-color: #00b0f6;
 }
+body main .notasContainer .nota-C .controlesSuperiores {
+  background-color: #00b0f6;
+}
 body main .notasContainer .nota-M {
   background-color: #ff00ff;
   border-color: #96305a;
 }
+body main .notasContainer .nota-M .controlesSuperiores {
+  background-color: #96305a;
+}
 body main .notasContainer .nota-Y {
-  background-color: #ffcc0f;
-  border-color: #beb72d;
+  background-color: #fff159;
+  border-color: #ffcf17;
+}
+body main .notasContainer .nota-Y .controlesSuperiores {
+  background-color: #ffcf17;
 }
 body main .notasContainer .nota-K {
   background-color: #000;
-  border-color: #000;
+  border-color: #aaa;
   color: white;
+}
+body main .notasContainer .nota-K .controlesSuperiores {
+  background-color: #eee;
+  color: black;
+}
+body main .notasContainer .nota-K .controlesSuperiores svg {
+  fill: #aaa;
 }
 body main .notasContainer .nota-W {
   background-color: #fff;
   border-color: #000;
+}
+body main .notasContainer .nota-W .controlesSuperiores {
+  background-color: #000;
+  color: white;
+}
+body main .notasContainer .nota-W .controlesSuperiores svg {
+  fill: white;
 }
 .temaOscuro {
   background-color: #2b2b2b;

@@ -44,10 +44,11 @@ function cambiarTemaOscuro() {
 }
 
 if(hora>=20 || hora <=7) {
-    body.classList.remove("temaClaro");
-    body.classList.add("temaOscuro");
-    botonAlternarTemaOscuro.classList.add("temaOscuro");
-    botonAlternarTemaOscuro.classList.remove("temaClaro");
+    cambiarTemaOscuro();
+    // body.classList.remove("temaClaro");
+    // body.classList.add("temaOscuro");
+    // botonAlternarTemaOscuro.classList.add("temaOscuro");
+    // botonAlternarTemaOscuro.classList.remove("temaClaro");
    // botonAlternarTemaOscuro.innerText = "Cambiar a modo Claro";
 }
 

@@ -205,13 +205,13 @@ body footer .temaOscuro a svg {
 
 .temaOscuro {
   background-color: #2b2b2b;
-  transition: all 1s;
+  transition: all 0.3s;
 }
 
 .temaClaro {
   background-color: #efefef;
   color: black;
-  transition: all 1s;
+  transition: all 0.3s;
 }
 
 @media only screen and (min-width: 370px) {

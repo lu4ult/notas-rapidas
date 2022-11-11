@@ -10,4 +10,4 @@
 
 
 Importante:
-Las notas se almacenan en local con local.storage. Si se eliminan los datos del navegador se borrarán, no depositar plena confianza en la página. En un futuro se almacenarán en alguna base de datos.
+Las notas se almacenan en local con local.storage, en un futuro se almacenarán en alguna base de datos.

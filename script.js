@@ -129,7 +129,7 @@ function recuperarNota() {
 
 function guardarEnLocal() {
     let enJson = JSON.stringify(notasArray);
-    localStorage.setItem("usuario",enJson);
+    localStorage.setItem("notas-rapidas-data",enJson);
     // console.log("guardado:");
     // console.log(enJson);
     // console.log("fin");
@@ -171,9 +171,14 @@ function mostrarNotas() {
 }
 
 
+/* Compatibilidad hacia atrás para reemplazar la key del local storage y no perder la data*/
+if(localStorage.getItem("usuario") != null) {
+    console.log("compatibilidad hacia atrás...")
+    localStorage.setItem("notas-rapidas-data",localStorage.getItem("usuario"));
+    localStorage.removeItem("usuario");
+}
 
-let localData = localStorage.getItem("usuario");
-
+let localData = localStorage.getItem("notas-rapidas-data");
 if(localData != null) {
 //if(local == null || notasArray.length == 0) {
 
@@ -189,7 +194,7 @@ if(localData != null) {
 
 else {
     //console.log("no había nada!");
-    localStorage.clear();
+    //localStorage.clear();
     notasArray.push(new Notas("<strong>INSTRUCCIONES</strong><br><ul><li>Escriba el texto de una nota y presione \"GUARDAR\"; aparecerá su nuevo post-it.</li><li>Cambie el color con el selector CMYKW</li><li>Puede indicar \"prioridad\" del 1 al 10 para que aparezca primero.</li><li>Al eliminar una nota aparecerá el botón papelera para restaurarla.</li></ul>",new Date(),0,"M"));
     mostrarNotas();
 }

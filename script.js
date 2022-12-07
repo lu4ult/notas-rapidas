@@ -1,6 +1,3 @@
-// localStorage.setItem('nota1', 'Juan');
-// localStorage.setItem('nota2', 'Pepe');
-
 class Notas {
     constructor(texto,fecha,prioridad,color) {
         this.texto = texto;
@@ -9,8 +6,9 @@ class Notas {
         this.color = color.toUpperCase();
     }
 }
-let notasArray = [];
 
+let notasArray = [];
+let notasArrayPapelera = [];
 let hora = new Date().getHours();
 let body = document.getElementById("body");
 
@@ -45,30 +43,14 @@ function cambiarTemaOscuro() {
 
 if(hora>=20 || hora <=7) {
     cambiarTemaOscuro();
-    // body.classList.remove("temaClaro");
-    // body.classList.add("temaOscuro");
-    // botonAlternarTemaOscuro.classList.add("temaOscuro");
-    // botonAlternarTemaOscuro.classList.remove("temaClaro");
-   // botonAlternarTemaOscuro.innerText = "Cambiar a modo Claro";
 }
 
-
-
 /************************************************************** */
-
-
-
-let notasArrayPapelera = [];
-
 
 /*Dado un objeto fecha retornamos un string en formato dd/mm/aaaa para simplificar la lectura cuando no queremos ver la fecha completa con hora y todos los chiches.*/
 function obtenerFechaFormateada(fecha) {
     return fecha.getDate()+"/"+(fecha.getMonth() +1)+"/"+fecha.getFullYear()+" "+fecha.getHours()+":" + (fecha.getMinutes()<10?"0":"") + fecha.getMinutes();
 }
-
-
-console.log("hola");
-
 
 function selectorColor(indice) {
     let letraSeleccionada = document.getElementById("select"+indice);   //Obtenemos el valor que seleccionó el usuario
@@ -89,24 +71,17 @@ function borrarNota(indice) {
     botonPapelera.classList.remove("ocultar");
     notasArrayPapelera.push(notasArray[indice]);
     notasArray.splice(indice,1);
-    //console.log(notasArrayPapelera);
-
     mostrarNotas();
-
 }
 
 let botonGuardarNota = document.getElementById("guardarNota");
 let textoUsuario = document.getElementById("textoEntrada");
 
 botonGuardarNota.addEventListener("click",agregarNota);
-textoUsuario.addEventListener("focus", limpiarContenidoInput); //To-Do: chequear que se presione el enter
-function limpiarContenidoInput() {
-    //alert("hola")
-    textoUsuario.value = "";
-}
-
 function agregarNota() {
-    let crearNota = new Notas(textoUsuario.value,new Date(),notasArray.length,"Y");
+    let colores = ['C','M','Y','K','W'];
+
+    let crearNota = new Notas(textoUsuario.value,new Date(),notasArray.length,colores.at(Math.random()*colores.length));
     notasArray.push(crearNota);
     mostrarNotas();
 }
@@ -130,9 +105,6 @@ function recuperarNota() {
 function guardarEnLocal() {
     let enJson = JSON.stringify(notasArray);
     localStorage.setItem("notas-rapidas-data",enJson);
-    // console.log("guardado:");
-    // console.log(enJson);
-    // console.log("fin");
 }
 
 
@@ -181,24 +153,19 @@ if(localStorage.getItem("usuario") != null) {
 let localData = localStorage.getItem("notas-rapidas-data");
 if(localData != null) {
 //if(local == null || notasArray.length == 0) {
-
     let parsedData = JSON.parse(localData);
-    //console.log(parsedData);
-     for(let i=0;i<parsedData.length;i++) {
+    for(let i=0;i<parsedData.length;i++) {
          console.log("item "+i+" - "+parsedData[i].texto);
          notasArray.push(new Notas(parsedData[i].texto,new Date(parsedData[i].fecha),parsedData[i].prioridad,parsedData[i].color));
      }
-     console.log(notasArray);
+     //console.log(notasArray);
      mostrarNotas();
 }
 
 else {
-    //console.log("no había nada!");
-    //localStorage.clear();
     notasArray.push(new Notas("<strong>INSTRUCCIONES</strong><br><ul><li>Escriba el texto de una nota y presione \"GUARDAR\"; aparecerá su nuevo post-it.</li><li>Cambie el color con el selector CMYKW</li><li>Puede indicar \"prioridad\" del 1 al 10 para que aparezca primero.</li><li>Al eliminar una nota aparecerá el botón papelera para restaurarla.</li></ul>",new Date(),0,"M"));
     mostrarNotas();
 }
-
 
 
 let botonDescargar = document.getElementById("descargarCsv");
@@ -225,7 +192,23 @@ function botonDescargarCsvPresionado() {
 }
 
 
+window.addEventListener('keydown', function (e) {
+    if(e.key === "Enter") {
+        if(document.activeElement.id === "textoEntrada") {
+            document.getElementById("guardarNota").click();
+            textoUsuario.value = "";
+        }
+    }
+});
+
+window.addEventListener('click',(e) => {
+    if(e.target.id === "textoEntrada") {
+        textoUsuario.value = "";
+    }
+    else {
+        textoUsuario.value = "Escribime algo!";
+    }
+});
 
 
-
-console.log("adios");
+console.log("adios")

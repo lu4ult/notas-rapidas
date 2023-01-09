@@ -44,6 +44,7 @@ $debug-level:0;
 
 body {
     @extend .centrarColumna;
+    font-family: 'Roboto', sans-serif;
 
     font-size: calc(1* $baseSize);
 
@@ -207,7 +208,6 @@ body {
                 }
 
                 .principal {
-                    //border: 1px solid red;
                     @extend .centrarColumna;
                     margin: 1.5rem;
 
@@ -314,9 +314,6 @@ body {
                     .controlesSuperiores {
                         flex-direction: row;
                         justify-content: space-between;
-                        div {
-                            //outline: 1px solid red;
-                        }
 
                         .nota_fecha {
                            width: 50%;
